@@ -36,3 +36,5 @@ class MyApp extends StatelessWidget {
     );
   }
 }
+
+// EN SON DAHA FAZLA WALLPAPER EKLEYECEKTİK . FAVORİTES , SEARCH VE KATOGERİLERDE İKEN SetWallpaper YAPMIYOR ONU AYARLA .
