@@ -28,8 +28,9 @@ class MyApp extends StatelessWidget {
           selectedItemColor: Colors.deepPurpleAccent,
           unselectedItemColor: Colors.white70,
         ),
+        
       ),
-      home: const Pages(title: 'Marvel Wallpaper App'),
+      home: const Pages(title: 'Marvel Wallpaper App',),
     );
   }
 }
