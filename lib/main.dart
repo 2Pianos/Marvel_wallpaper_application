@@ -17,20 +17,22 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Marvel Wallpaper App',
       theme: ThemeData(
-        scaffoldBackgroundColor: Colors.black,
-        appBarTheme: const AppBarTheme(
-          titleTextStyle: TextStyle(color: Colors.white, fontSize: 20.0),
-          backgroundColor: Colors.black,
-          centerTitle: false,
-        ),
-        bottomNavigationBarTheme: const BottomNavigationBarThemeData(
-          backgroundColor: Colors.black,
-          selectedItemColor: Colors.deepPurpleAccent,
-          unselectedItemColor: Colors.white70,
-        ),
-        
+          scaffoldBackgroundColor: Colors.black,
+          appBarTheme: const AppBarTheme(
+            titleTextStyle: TextStyle(color: Colors.white, fontSize: 20.0),
+            backgroundColor: Colors.black,
+            centerTitle: false,
+          ),
+          bottomNavigationBarTheme: const BottomNavigationBarThemeData(
+            backgroundColor: Colors.black,
+            selectedItemColor: Colors.deepPurpleAccent,
+            unselectedItemColor: Colors.white70,
+          ),
+          progressIndicatorTheme:
+              const ProgressIndicatorThemeData(color: Colors.purpleAccent)),
+      home: const Pages(
+        title: 'Marvel Wallpaper App',
       ),
-      home: const Pages(title: 'Marvel Wallpaper App',),
     );
   }
 }
