@@ -12,13 +12,13 @@ class AllImages extends StatelessWidget {
       builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
         if (snapshot.hasData) {
           return GridView.builder(
-            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2), 
+            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2, childAspectRatio: 0.7), 
             itemCount: snapshot.data?.docs.length,
             itemBuilder:(BuildContext context, int index) {
               return GridTile(
                 child: InkResponse(
                   child: Padding(
-                    padding: const EdgeInsets.all(3.0),
+                    padding: const EdgeInsets.all(5.0),
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(20.0),
                       child: CachedNetworkImage(
