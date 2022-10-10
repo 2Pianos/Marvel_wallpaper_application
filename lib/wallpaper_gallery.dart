@@ -1,10 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:photo_view/photo_view_gallery.dart';
-import 'package:wallpaper_manager_flutter/wallpaper_manager_flutter.dart';
 
 class WallpaperGallery extends StatefulWidget {
   final List<DocumentSnapshot> wallpaperList;
@@ -54,7 +51,9 @@ class _WallpaperGalleryState extends State<WallpaperGallery> {
               width: 100,
               color: Color(IconTheme.of(context).color!.value ^ 0xffffff),
               child: IconButton(
-                  onPressed: () {}, icon: const Icon(Icons.format_paint)
+                  onPressed: () {
+                    
+                  }, icon: const Icon(Icons.format_paint)
               ),
             ),
           )

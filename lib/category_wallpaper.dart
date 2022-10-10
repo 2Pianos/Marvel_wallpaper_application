@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:wallpaper_app/utilities.dart';
 
 class CategoryWallpapers extends StatefulWidget {
 
@@ -34,7 +35,7 @@ class _CategoryWallpapersState extends State<CategoryWallpapers> {
                 return GridTile(
                   child: InkResponse(
                     onTap: () {
-                      // wallpaper uygulamıyor . onu ayarlayacaz.
+                      setWallpaper(context: context, url: categoryDocuments?.elementAt(index)['url']);
                     },
                     child: Padding(
                       padding: const EdgeInsets.all(5.0),
