@@ -33,15 +33,17 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return GridView.builder(
-        gridDelegate:
-            const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 1, childAspectRatio: 0.7),
+        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 1, childAspectRatio: 0.7),
         itemCount: categories.length,
         itemBuilder: (BuildContext context, int index) {
           return InkResponse(
             onTap: () {
-              Navigator.push(context, MaterialPageRoute(builder:(context) {
-                return CategoryWallpapers(category: categories.elementAt(index));
-              },
+              Navigator.push(context, MaterialPageRoute(
+                builder: (context) {
+                  return CategoryWallpapers(
+                      category: categories.elementAt(index));
+                },
               ));
             },
             child: Container(

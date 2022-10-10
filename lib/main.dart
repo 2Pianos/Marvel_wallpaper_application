@@ -10,7 +10,7 @@ Future<void> main() async {
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+  const MyApp({Key? key,}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -36,5 +36,3 @@ class MyApp extends StatelessWidget {
     );
   }
 }
-
-// EN SON DAHA FAZLA WALLPAPER EKLEYECEKTİK . FAVORİTES , SEARCH VE KATOGERİLERDE İKEN SetWallpaper YAPMIYOR ONU AYARLA .

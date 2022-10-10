@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
+import 'package:wallpaper_app/wallpaper_gallery.dart';
 import 'package:wallpaper_manager_flutter/wallpaper_manager_flutter.dart';
 
 class AllImages extends StatefulWidget {
@@ -28,9 +29,23 @@ class _AllImagesState extends State<AllImages> {
             padding: const EdgeInsets.all(5.0),
             child: ClipRRect(
               borderRadius: BorderRadius.circular(20.0),
-              child: CachedNetworkImage(
-                imageUrl: widget.snapshot.data?.docs.elementAt(index)['url'],
-                fit: BoxFit.cover,
+              child: InkResponse(
+                onTap: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) {
+                        return WallpaperGallery(
+                          wallpaperList: widget.snapshot.data!.docs, 
+                          initialPage: index,
+                        );
+                      },
+                    )
+                  );
+                },
+                child: CachedNetworkImage(
+                  imageUrl: widget.snapshot.data?.docs.elementAt(index)['url'],
+                  fit: BoxFit.cover,
+                ),
               ),
             ),
           ),
@@ -44,7 +59,7 @@ class _AllImagesState extends State<AllImages> {
 
   Future<void> _setWallpaper(int index, BuildContext context) async {
     final imageurl = widget.snapshot.data?.docs.elementAt(index)['url'];
-    
+
     Future<void> _setwallpaper(location) async {
       var file = await DefaultCacheManager().getSingleFile(imageurl);
       try {
@@ -63,32 +78,31 @@ class _AllImagesState extends State<AllImages> {
         debugPrint('e');
       }
     }
-    
+
     var actionSheet = CupertinoActionSheet(
       title: const Text('Set As'),
       actions: [
         CupertinoActionSheetAction(
             onPressed: () {
-              Navigator.of(context).pop(
-                  _setwallpaper(WallpaperManagerFlutter.HOME_SCREEN));
+              Navigator.of(context)
+                  .pop(_setwallpaper(WallpaperManagerFlutter.HOME_SCREEN));
             },
             child: const Text('Home')),
         CupertinoActionSheetAction(
             onPressed: () {
-              Navigator.of(context).pop(
-                  _setwallpaper(WallpaperManagerFlutter.LOCK_SCREEN));
+              Navigator.of(context)
+                  .pop(_setwallpaper(WallpaperManagerFlutter.LOCK_SCREEN));
             },
             child: const Text('Lock')),
         CupertinoActionSheetAction(
             onPressed: () {
-              Navigator.of(context).pop(
-                  _setwallpaper(WallpaperManagerFlutter.BOTH_SCREENS));
+              Navigator.of(context)
+                  .pop(_setwallpaper(WallpaperManagerFlutter.BOTH_SCREENS));
             },
             child: const Text('Both')),
       ],
     );
     showCupertinoModalPopup(
         context: context, builder: (context) => actionSheet);
-              
   }
 }
