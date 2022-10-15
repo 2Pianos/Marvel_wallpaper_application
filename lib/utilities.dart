@@ -1,14 +1,35 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
+import 'package:image_cropper/image_cropper.dart';
 import 'package:wallpaper_manager_flutter/wallpaper_manager_flutter.dart';
 
 Future<void> setWallpaper({required BuildContext context, required String url}) async {
 
   Future<void> _setwallpaper(location) async {
     var file = await DefaultCacheManager().getSingleFile(url);
+    CroppedFile? croppedFile = await ImageCropper().cropImage(
+      sourcePath: file.path,
+      aspectRatio: CropAspectRatio(
+        ratioX: MediaQuery.of(context).size.width,
+        ratioY: MediaQuery.of(context).size.height,),
+      uiSettings: [
+        AndroidUiSettings(
+            toolbarTitle: 'Cropper',
+            toolbarColor: Colors.deepOrange,
+            toolbarWidgetColor: Colors.white,
+            initAspectRatio: CropAspectRatioPreset.original,
+            lockAspectRatio: false),
+        IOSUiSettings(
+          title: 'Cropper',
+        ),
+        WebUiSettings(
+          context: context,
+        ),
+      ],
+    );
     try {
-      WallpaperManagerFlutter().setwallpaperfromFile(file, location);
+      WallpaperManagerFlutter().setwallpaperfromFile(croppedFile, location);
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
           content: Text('Wallpaper updated'),
@@ -20,7 +41,6 @@ Future<void> setWallpaper({required BuildContext context, required String url}) 
           content: Text('Error Setting Wallpaper'),
         ),
       );
-      debugPrint('e');
     }
   }
 

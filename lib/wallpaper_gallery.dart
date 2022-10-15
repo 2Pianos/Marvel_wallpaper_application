@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:photo_view/photo_view_gallery.dart';
+import 'package:wallpaper_app/utilities.dart';
 
 class WallpaperGallery extends StatefulWidget {
   final List<DocumentSnapshot> wallpaperList;
@@ -31,7 +32,7 @@ class _WallpaperGalleryState extends State<WallpaperGallery> {
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context,) {
     return Material(
       child: Stack(children: [
         PhotoViewGallery.builder(
@@ -52,7 +53,10 @@ class _WallpaperGalleryState extends State<WallpaperGallery> {
               color: Color(IconTheme.of(context).color!.value ^ 0xffffff),
               child: IconButton(
                   onPressed: () {
-                    
+                    setWallpaper(
+                      context: context, 
+                      url: widget.wallpaperList.elementAt(_pageController.page!.toInt())['url']
+                      );
                   }, icon: const Icon(Icons.format_paint)
               ),
             ),
