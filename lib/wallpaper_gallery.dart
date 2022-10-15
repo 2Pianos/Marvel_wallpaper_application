@@ -40,8 +40,10 @@ class _WallpaperGalleryState extends State<WallpaperGallery> {
           itemCount: widget.wallpaperList.length,
           builder: (BuildContext context, int index) {
             return PhotoViewGalleryPageOptions(
-                imageProvider: CachedNetworkImageProvider(
-                    widget.wallpaperList.elementAt(index)['url']));
+              imageProvider: CachedNetworkImageProvider(
+                widget.wallpaperList.elementAt(index)['url']
+              )
+            );
           },
         ),
         Align(

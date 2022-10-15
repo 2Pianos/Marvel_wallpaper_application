@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
@@ -15,11 +17,13 @@ Future<void> setWallpaper({required BuildContext context, required String url}) 
         ratioY: MediaQuery.of(context).size.height,),
       uiSettings: [
         AndroidUiSettings(
-            toolbarTitle: 'Cropper',
-            toolbarColor: Colors.deepOrange,
+            toolbarTitle: 'Image Cropper',
+            toolbarColor: Colors.deepPurple,
+            activeControlsWidgetColor: Colors.deepPurple,
             toolbarWidgetColor: Colors.white,
             initAspectRatio: CropAspectRatioPreset.original,
-            lockAspectRatio: false),
+            lockAspectRatio: false
+          ),
         IOSUiSettings(
           title: 'Cropper',
         ),
@@ -67,5 +71,5 @@ Future<void> setWallpaper({required BuildContext context, required String url}) 
           child: const Text('Both')),
     ],
   );
-  showCupertinoModalPopup(context: context, builder: (context) => actionSheet);
+  showCupertinoModalPopup(context: context, builder: (context) => actionSheet, filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10));
 }
