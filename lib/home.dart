@@ -1,12 +1,11 @@
-import 'package:cached_network_image/cached_network_image.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:wallpaper_app/category_wallpaper.dart';
+import 'package:wallpaper_app/models/wallpapers.dart';
 
 class Home extends StatefulWidget {
-  final AsyncSnapshot<QuerySnapshot> snapshot;
+  final List<Wallpaper> wallpapersList;
 
-  const Home({Key? key, required this.snapshot}) : super(key: key);
+  const Home({Key? key, required this.wallpapersList}) : super(key: key);
 
   @override
   State<Home> createState() => _HomeState();
@@ -20,12 +19,12 @@ class _HomeState extends State<Home> {
   void initState() {
     super.initState();
 
-    widget.snapshot.data?.docs.forEach((document) {
-      var category = document['tag'];
+    widget.wallpapersList.forEach((document) {
+      var category = document.category;
 
       if (!categories.contains(category)) {
         categories.add(category);
-        categoryImages.add(document['url']);
+        categoryImages.add(document.url);
       }
     });
   }
@@ -42,7 +41,7 @@ class _HomeState extends State<Home> {
               Navigator.push(context, MaterialPageRoute(
                 builder: (context) {
                   return CategoryWallpapers(
-                      category: categories.elementAt(index));
+                    category: categories.elementAt(index),);
                 },
               ));
             },
@@ -50,18 +49,18 @@ class _HomeState extends State<Home> {
               margin: const EdgeInsets.all(8.0),
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(20),
-                  image: DecorationImage(
-                      fit: BoxFit.cover,
-                      image: CachedNetworkImageProvider(
-                        categoryImages.elementAt(index),
-                      ))),
+                  color: const Color.fromARGB(255, 53, 14, 121)),
               alignment: Alignment.center,
               child: Text(
                 categories.elementAt(index).toUpperCase(),
                 style: const TextStyle(fontSize: 30.0, color: Colors.white),
+                textAlign: TextAlign.center,
               ),
             ),
           );
         });
   }
 }
+
+//image: DecorationImage(fit: BoxFit.cover,image: CachedNetworkImageProvider(categoryImages.elementAt(index),))
+//kategorilere karaket imajı ekleme

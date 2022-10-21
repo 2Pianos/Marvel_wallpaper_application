@@ -1,13 +1,13 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:wallpaper_app/models/wallpapers.dart';
 import 'package:wallpaper_app/utilities.dart';
 import 'package:wallpaper_app/wallpaper_gallery.dart';
 
 class AllImages extends StatefulWidget {
-  final AsyncSnapshot<QuerySnapshot> snapshot;
+  final List<Wallpaper> wallpapersList;
 
-  const AllImages({Key? key, required this.snapshot}) : super(key: key);
+  const AllImages({Key? key, required this.wallpapersList}) : super(key: key);
 
   @override
   State<AllImages> createState() => _AllImagesState();
@@ -19,7 +19,7 @@ class _AllImagesState extends State<AllImages> {
     return GridView.builder(
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 2, childAspectRatio: 0.7),
-      itemCount: widget.snapshot.data?.docs.length,
+      itemCount: widget.wallpapersList.length,
       itemBuilder: (BuildContext context, int index) {
         return GridTile(
             child: InkResponse(
@@ -33,7 +33,7 @@ class _AllImagesState extends State<AllImages> {
                     MaterialPageRoute(
                       builder: (context) {
                         return WallpaperGallery(
-                          wallpaperList: widget.snapshot.data!.docs, 
+                          wallpaperList: widget.wallpapersList, 
                           initialPage: index,
                         );
                       },
@@ -41,14 +41,14 @@ class _AllImagesState extends State<AllImages> {
                   );
                 },
                 child: CachedNetworkImage(
-                  imageUrl: widget.snapshot.data?.docs.elementAt(index)['url'],
+                  imageUrl: widget.wallpapersList.elementAt(index).url,
                   fit: BoxFit.cover,
                 ),
               ),
             ),
           ),
           onTap: () async {
-            await setWallpaper(context: context, url: widget.snapshot.data?.docs.elementAt(index)['url']);
+            await setWallpaper(context: context, url: widget.wallpapersList.elementAt(index).url);
           },
         ));
       },

@@ -1,5 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:wallpaper_app/models/wallpapers.dart';
+import 'package:wallpaper_app/providers/fav_wallpaper_manager.dart';
 
 import 'all_images.dart';
 import 'fav.dart';
@@ -21,7 +24,7 @@ class _PagesState extends State<Pages> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Marvel Wallpaper App'),
+        title: const Text('Marvel Wallpapers'),
         actions: const [
           Padding(
             padding: EdgeInsets.all(8.0),
@@ -34,11 +37,25 @@ class _PagesState extends State<Pages> {
         stream: FirebaseFirestore.instance.collection('Wallpapers').snapshots(),
         builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
           if (snapshot.hasData && snapshot.data!.docs.isNotEmpty) {
+    
+            var wallpapersList = List<Wallpaper>.empty(growable: true);
+            var favWallpaperManager = Provider.of<FavWallpaperManager>(context);
+    
+            snapshot.data?.docs.forEach((documentSnapshot) {
+              var wallpaper = Wallpaper.fromDocumentSnapshot(documentSnapshot);
+
+              if (favWallpaperManager.isFavorite(wallpaper)) {
+                wallpaper.isFavorite = true;
+              }
+
+              wallpapersList.add(wallpaper);
+            });
+    
             return PageView.builder(
               controller: pageController,
               itemCount: 3,
               itemBuilder: (BuildContext context, int index) {
-                return _getPageAtIndex(index, snapshot);
+                return _getPageAtIndex(index, wallpapersList);
               },
               onPageChanged: (int index) {
                 setState(() {
@@ -62,15 +79,15 @@ class _PagesState extends State<Pages> {
       items: const [
         BottomNavigationBarItem(
           icon: Icon(Icons.image),
-          label: 'Wallpaper',
+          label: 'Wallpapers',
         ),
         BottomNavigationBarItem(
-          icon: Icon(Icons.home),
-          label: 'Home',
+          icon: Icon(Icons.pages),
+          label: 'Categories',
         ),
         BottomNavigationBarItem(
           icon: Icon(Icons.favorite),
-          label: 'Favorite',
+          label: 'Favorites',
         ),
       ],
       onTap: (int index) {
@@ -85,16 +102,16 @@ class _PagesState extends State<Pages> {
   }
 
   Widget _getPageAtIndex(
-      int index, AsyncSnapshot<QuerySnapshot<Object?>> snapshot) {
+      int index, List<Wallpaper> wallpaperList) {
     switch (index) {
       case 0:
-      return AllImages(snapshot: snapshot);
+      return AllImages(wallpapersList: wallpaperList);
         break;
       case 1:
-      return Home(snapshot: snapshot);
+      return Home(wallpapersList: wallpaperList);
         break;
       case 2:
-      return Favorites(snapshot: snapshot);
+      return Favorites(wallpapersList: wallpaperList);
         break;
       default:
       return const CircularProgressIndicator();

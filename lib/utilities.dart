@@ -49,26 +49,26 @@ Future<void> setWallpaper({required BuildContext context, required String url}) 
   }
 
   var actionSheet = CupertinoActionSheet(
-    title: const Text('Set As'),
+    title: const Text('Options', style: TextStyle(color: Colors.black)),
     actions: [
       CupertinoActionSheetAction(
           onPressed: () {
             Navigator.of(context)
                 .pop(_setwallpaper(WallpaperManagerFlutter.HOME_SCREEN));
           },
-          child: const Text('Home')),
+          child: const Text('Set As Home', style: TextStyle(color: Colors.deepPurpleAccent))),
       CupertinoActionSheetAction(
           onPressed: () {
             Navigator.of(context)
                 .pop(_setwallpaper(WallpaperManagerFlutter.LOCK_SCREEN));
           },
-          child: const Text('Lock')),
+          child: const Text('Set As Lock', style: TextStyle(color: Colors.deepPurpleAccent),)),
       CupertinoActionSheetAction(
           onPressed: () {
             Navigator.of(context)
                 .pop(_setwallpaper(WallpaperManagerFlutter.BOTH_SCREENS));
           },
-          child: const Text('Both')),
+          child: const Text('Set As Both', style: TextStyle(color: Colors.deepPurpleAccent))),
     ],
   );
   showCupertinoModalPopup(context: context, builder: (context) => actionSheet, filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10));
